@@ -44,11 +44,10 @@ import com.eomcs.pms.handler.TaskDeleteCommand;
 import com.eomcs.pms.handler.TaskDetailCommand;
 import com.eomcs.pms.handler.TaskListCommand;
 import com.eomcs.pms.handler.TaskUpdateCommand;
-import com.eomcs.pms.listener.AppInitListener;
 import com.eomcs.util.Prompt;
 import com.google.gson.Gson;
 
-public class App {
+public class App03 {
 
   // 옵저버를 보관할 컬렉션 객체
   List<ApplicationContextListener> listeners = new ArrayList<>();
@@ -75,7 +74,7 @@ public class App {
   // service() 실행 후에 옵저버에게 통지한다.
   private void notifyApplicationContextListenerOnServiceStopped() {
     for (ApplicationContextListener listener : listeners) {
-      // 서비스가 종료되었으니 마무리 작업하라고,
+      // 서비스가 종료되었으니 마무리 작업하라고, 
       // 마무리 작업에 관심있는 각 옵저버에게 통지한다.
       listener.contextDestroyed();
     }
@@ -83,16 +82,13 @@ public class App {
 
 
   public static void main(String[] args) throws Exception {
-    App app = new App();
-
-    // 옵저버 등록
-    app.addApplicationContextListener(new AppInitListener());
-
+    App03 app = new App03();
     app.service();
   }
 
   public void service() throws Exception {
 
+    // 옵저버에게 통지한다.
     notifyApplicationContextListenerOnServiceStarted();
 
     // 스태틱 멤버들이 공유하는 변수가 아니라면 로컬 변수로 만들라.
@@ -191,6 +187,7 @@ public class App {
     saveObjects(projectList, projectFile);
     saveObjects(taskList, taskFile);
 
+    // 옵저버에게 통지한다.
     notifyApplicationContextListenerOnServiceStopped();
   }
 
